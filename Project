@@ -1,0 +1,113 @@
+#Task1
+struct Player {
+    string first_name;
+    string last_name;
+    string team; 
+};
+vector<Player>findboth(const vector<Player>& basketball_players,const vector<Player>& football_players){
+	unordered_map<string,int> hashmap;
+	for(const auto& player:basketball_players){
+		int i = 0;
+		string key = player.first_name +" "+ player.last_name;
+		hashmap[key] = i;
+		i++;
+	}
+	vector<Player>both={};
+	for(const auto& player : football_players){
+		string key = player.first_name +" "+ player.last_name;
+		if(hashmap.find(key) != hashmap.end()){
+			both.push_back({player.first_name,player.last_name});
+		}
+	}
+	return both;
+}
+#Task2
+int findnumber( const vector<int>& nums, int n){
+	int sum = n*(n+1)/2;
+	int sumarray = 0;
+	int number = 0;
+	for(int num:nums){
+		sumarray = sumarray + num;
+	}
+	number = sum - sumarray;
+	return number;
+} 
+#Task3
+int findmaxprofit(const vector<int>& nums){
+	int max=numeric_limits<int>::min();
+    int min=numeric_limits<int>::max();
+    int maxprofit = 0;
+    for(int num:nums){
+    	if(num<min){
+    		min = num;
+		}
+		if(num>max){
+			max = num;
+		}
+	}
+	maxprofit = max-min;
+	return maxprofit;
+}
+#Task4
+int findmaxproduct(const vector<int>& nums){
+	int max1=0,max2=0,min1=0,min2=0,maxproduct=0;
+	for(int num:nums){
+		if(num>max1){
+			max2 = max1;
+			max1 = num;
+		}else if(num>max2){
+			max2 = num;
+		}
+		if(num<min1){
+			min2 = min1;
+			min1 = num;
+		}else if(num<min2){
+			min2 = num;
+		}
+	}
+	if(max1*max2 > min1*min2){
+		maxproduct = max1*max2;
+	}else{
+		maxproduct = min1*min2;
+	}
+	return maxproduct;
+}
+#Task5
+vector <double> bucketsort(const vector<double>& nums, int n){
+	vector<vector<double>> buckets(n);
+	vector<double>sortednums;
+	int range = 1;
+	double min = 97.0;
+	double max = 99.0; 
+	for(double num:nums){
+		int index = (num-min)/range;
+		buckets[index].push_back(num);
+	}
+	for(auto& bucket:buckets){
+		sort(bucket.begin(), bucket.end());
+		sortednums.insert(sortednums.end(), bucket.begin(), bucket.end());
+		
+	}
+	return sortednums;
+}
+#Task6
+int findlongestlength(const vector<int>& nums){
+	int longestlength = 0;
+	unordered_set<int> numberSet(nums.begin(), nums.end());
+	int beginnum = 0;
+	for(int num:nums){
+		if(numberSet.find(num-1) == numberSet.end()){
+			beginnum = num;
+			int length = 1;
+			while(numberSet.find(beginnum+1) != numberSet.end()){
+				length++;
+				beginnum++;
+			}
+			if(longestlength < length){
+				longestlength = length;
+			}
+		}
+			
+		}
+		return longestlength;
+	}
